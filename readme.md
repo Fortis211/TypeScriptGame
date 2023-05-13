@@ -1,0 +1,1 @@
+Simple game project for learning webDev and typeScript purposes 
