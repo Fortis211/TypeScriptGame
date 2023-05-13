@@ -33,3 +33,29 @@ body{
     font-size: large;
     margin: 10px;
 }
+
+.selectColorsOutline{
+    padding: 10px;
+    margin: 10px;
+    background-color: rgb(38, 39, 42);
+    border-radius: 60px;
+    display: flex;
+}
+.colors {
+    width: 30px;
+    height: 30px;
+    border: 2px;
+    border-color: aliceblue;
+    border-radius: 30px;
+    padding: auto;
+    margin: auto;
+    transition: all 0.1s;
+
+}
+.colors:hover{
+    transform: translateY(-5px);
+    width: 40px;
+    height: 40px;
+
+
+}

@@ -1,28 +1,56 @@
 class GameLogic {
+  public colorsArr: string[] = [];
   constructor(
     public colorNumber: number,
     public patternLen: number,
     public repeatColors: boolean
   ) {}
+  createColorArr() {
+    let offset = 50 * Math.random();
+    for (let index = 0; index < this.colorNumber; index++) {
+      this.colorsArr.push(
+        "hsl(" +
+          (index * (360 / this.colorNumber) + (offset % 360)) +
+          ",100%,50%)"
+      );
+    }
+  }
+  displayColors() {
+    const colorsSection = document.getElementById(
+      "selectColors"
+    ) as HTMLDivElement;
+    colorsSection.innerHTML = "";
+    this.colorsArr.forEach((element, index) => {
+      let div = document.createElement("div");
+      div.setAttribute("class", "colors");
+      div.setAttribute("id",'color'+index);
+      div.style.backgroundColor = element;
+      colorsSection.appendChild(div);
+    });
+  }
 }
 
 function numberInputLen(event: Event) {
-    let val = parseInt((event.target as HTMLInputElement).value);
-  if(val > 10) {
-    (document.getElementById('patternLengthInput') as HTMLInputElement).value = '10';
+  let val = parseInt((event.target as HTMLInputElement).value);
+  if (val > 10) {
+    (document.getElementById("patternLengthInput") as HTMLInputElement).value =
+      "10";
   }
-  if(val < 2) {
-    (document.getElementById('patternLengthInput') as HTMLInputElement).value = '2';
+  if (val < 0) {
+    (document.getElementById("patternLengthInput") as HTMLInputElement).value =
+      "1";
   }
 }
 function numberInputCol(event: Event) {
-    let val = parseInt((event.target as HTMLInputElement).value);
-    if(val > 100) {
-        (document.getElementById('numOfColorsInput') as HTMLInputElement).value = '100';
-      }
-      if(val < 3) {
-        (document.getElementById('numOfColorsInput') as HTMLInputElement).value = '3';
-      }
+  let val = parseInt((event.target as HTMLInputElement).value);
+  if (val > 25) {
+    (document.getElementById("numOfColorsInput") as HTMLInputElement).value =
+      "25";
+  }
+  if (val < 0) {
+    (document.getElementById("numOfColorsInput") as HTMLInputElement).value =
+      "1";
+  }
 }
 
 function yesBtnClicked(event: Event) {
@@ -56,7 +84,7 @@ function onStartBtnClick(event: Event) {
     (document.getElementById("numOfColorsInput") as HTMLInputElement).value
   );
   oGameLogic = new GameLogic(colorNum, patternLen, repeatColors);
+  oGameLogic.createColorArr();
+  oGameLogic.displayColors();
   isInitialized = true;
-  
 }
-

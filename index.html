@@ -14,8 +14,6 @@
           id="patternLengthInput"
           type="number"
           value="5"
-          min="2"
-          max="10"
           oninput="numberInputLen(event)">
         <div class="gameOptionsItem">Number of colors:</div>
         <input
@@ -23,8 +21,6 @@
           id="numOfColorsInput"
           type="number"
           value="5"
-          min="3"
-          max="100"
           oninput="numberInputCol(event)">
         <div class="gameOptionsItem">Repeat colors</div>
         <div class="gameOptionsBtns">
@@ -36,6 +32,7 @@
       </li>
       <button class="startBtn" id="startBtn">Start</button>
     </section>
+    <div id="selectColors" class="selectColorsOutline"></div>
     <script>var exports = {};</script>
     <script src="dist/index.js"></script>
   </body>
