@@ -1,1 +1,1 @@
-Simple game project for learning webDev and typeScript purposes 
+Simple game -- Mastermind project for learning webDev and typeScript purposes 
