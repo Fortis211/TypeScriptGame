@@ -1,11 +1,42 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>TypeScript Game</title>
-        <link rel="stylesheet" href="css/style.css">
-    </head>
-    <body>
-
-        <script src="dist/index.js"> </script>
-    </body>
+  <head>
+    <title>TypeScript Game</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <section class="settingsOutline">
+      <h1>Game settings</h1>
+      <li class="gameOptions">
+        <div class="gameOptionsItem">Pattern length:</div>
+        <input
+          class="gameOptionsItem"
+          id="patternLengthInput"
+          type="number"
+          value="5"
+          min="2"
+          max="10"
+          oninput="numberInputLen(event)">
+        <div class="gameOptionsItem">Number of colors:</div>
+        <input
+          class="gameOptionsItem"
+          id="numOfColorsInput"
+          type="number"
+          value="5"
+          min="3"
+          max="100"
+          oninput="numberInputCol(event)">
+        <div class="gameOptionsItem">Repeat colors</div>
+        <div class="gameOptionsBtns">
+          <button class="gameOptionsBtn" id="repeatBtnYes" disabled="true" onclick="yesBtnClicked(event)">
+            Yes
+          </button>
+          <button class="gameOptionsBtn" id="repeatBtnNo" onclick="noBtnClicked(event)">No</button>
+        </div>
+      </li>
+      <button class="startBtn" id="startBtn">Start</button>
+    </section>
+    <script>var exports = {};</script>
+    <script src="dist/index.js"></script>
+  </body>
 </html>
