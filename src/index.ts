@@ -1,6 +1,6 @@
 class GameLogic {
   public colorsArr: string[] = [];
-  private solutionArr: number[] = [];
+  private solutionArr: string[] = [];
   public roundColors: string[] = [];
   public round: number = 0;
   constructor(
@@ -18,8 +18,50 @@ class GameLogic {
       );
     }
   }
+  checkState(round:string): boolean {
+    this.roundColors = [];
+    const gameGrid = document.getElementById('grid'+round) as HTMLDivElement;
+    const gridCell = gameGrid.getElementsByTagName('div');
+    for (let index = 0; index < this.patternLen; index++) {
+      this.roundColors.push(gridCell[index].style.backgroundColor);
+    }
+    let state: [number,number,number] = [0,0,0]; // correct, misplaced, wrong
+    this.roundColors.forEach((element, index) =>{
+      // correct values
+      if(element==this.solutionArr[index]){
+        state[0]+=1;
+      }
+      // misplaced values
+      if(this.solutionArr.includes(element)){
+        state[1]+=1;
+      }
+    })
+    state[2] = this.patternLen - state[1]; 
+    state[1] -= state[0];
+    let options = ["correct", "misplaced", "wrong"];
+    for (let index = 0; index < 3; index++) {
+      (document.getElementById(options[index]+round) as HTMLDivElement).innerText = state[index].toString();
+    }
+    return this.patternLen == state[0] ? true : false;
+  }
   generateSolution(){
-    //
+    let solutionIndices: number[] = [];
+    for (let index = 0; index < this.patternLen; index++) {
+      let randInt = Math.floor(Math.random()*this.colorNumber);
+      if(this.repeatColors){
+        solutionIndices.push(randInt);
+      } else{
+        while (solutionIndices.includes(randInt)){
+          randInt = Math.floor(Math.random()*this.colorNumber);
+        }
+        solutionIndices.push(randInt);
+      }
+    }
+    const colors = document.getElementById('selectColors') as HTMLDivElement;
+    const colorsDivs = colors.getElementsByTagName('div');
+    solutionIndices.forEach(element => {
+      this.solutionArr.push(colorsDivs[element].style.backgroundColor);
+    });
   }
   displayColors() {
     const colorsSection = document.getElementById(
@@ -106,8 +148,13 @@ function onCheckButton(event: Event) {
   round = round.slice(6);
   (
     document.getElementById("grid" + round) as HTMLDivElement
-  ).style.pointerEvents = "none";
-}
+    ).style.pointerEvents = "none";
+    let isSolved = oGameLogic.checkState(round);
+    if(isSolved){
+      alert('u won :))');
+      //to be completed
+    }
+  }
 
 function numberInputLen(event: Event) {
   let val = parseInt((event.target as HTMLInputElement).value);
@@ -188,6 +235,7 @@ function onStartBtnClick(event: Event) {
   oGameLogic.clear();
   oGameLogic.createColorArr();
   oGameLogic.displayColors();
+  oGameLogic.generateSolution();
   oGameLogic.createRound();
   isInitialized = true;
 }

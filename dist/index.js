@@ -17,7 +17,49 @@ class GameLogic {
                 ",100%,50%)");
         }
     }
+    checkState(round) {
+        this.roundColors = [];
+        const gameGrid = document.getElementById('grid' + round);
+        const gridCell = gameGrid.getElementsByTagName('div');
+        for (let index = 0; index < this.patternLen; index++) {
+            this.roundColors.push(gridCell[index].style.backgroundColor);
+        }
+        let state = [0, 0, 0];
+        this.roundColors.forEach((element, index) => {
+            if (element == this.solutionArr[index]) {
+                state[0] += 1;
+            }
+            if (this.solutionArr.includes(element)) {
+                state[1] += 1;
+            }
+        });
+        state[2] = this.patternLen - state[1];
+        state[1] -= state[0];
+        let options = ["correct", "misplaced", "wrong"];
+        for (let index = 0; index < 3; index++) {
+            document.getElementById(options[index] + round).innerText = state[index].toString();
+        }
+        return this.patternLen == state[0] ? true : false;
+    }
     generateSolution() {
+        let solutionIndices = [];
+        for (let index = 0; index < this.patternLen; index++) {
+            let randInt = Math.floor(Math.random() * this.colorNumber);
+            if (this.repeatColors) {
+                solutionIndices.push(randInt);
+            }
+            else {
+                while (solutionIndices.includes(randInt)) {
+                    randInt = Math.floor(Math.random() * this.colorNumber);
+                }
+                solutionIndices.push(randInt);
+            }
+        }
+        const colors = document.getElementById('selectColors');
+        const colorsDivs = colors.getElementsByTagName('div');
+        solutionIndices.forEach(element => {
+            this.solutionArr.push(colorsDivs[element].style.backgroundColor);
+        });
     }
     displayColors() {
         const colorsSection = document.getElementById("selectColors");
@@ -89,6 +131,10 @@ function onCheckButton(event) {
     let round = event.target.id;
     round = round.slice(6);
     document.getElementById("grid" + round).style.pointerEvents = "none";
+    let isSolved = oGameLogic.checkState(round);
+    if (isSolved) {
+        alert('u won :))');
+    }
 }
 function numberInputLen(event) {
     let val = parseInt(event.target.value);
@@ -152,6 +198,7 @@ function onStartBtnClick(event) {
     oGameLogic.clear();
     oGameLogic.createColorArr();
     oGameLogic.displayColors();
+    oGameLogic.generateSolution();
     oGameLogic.createRound();
     isInitialized = true;
 }
