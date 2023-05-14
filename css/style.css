@@ -5,9 +5,14 @@ body{
     /* margin: 5%; */
     /* padding: 10px; */
     text-shadow: 0 0 1px black, 0 0 1px black, 0 0 1px black, 0 0 1px black;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .settingsOutline {
+    width: 750px;
     padding: 10px;
     margin: 10px;
     background-color: rgb(38, 39, 42);
@@ -48,7 +53,7 @@ body{
     border-color: aliceblue;
     border-radius: 30px;
     padding: auto;
-    margin: auto;
+    margin: 2px;
     transition: all 0.1s;
 
 }
@@ -56,6 +61,62 @@ body{
     transform: translateY(-5px);
     width: 40px;
     height: 40px;
+}
 
+.gameAreaOutline {
+    padding: 10px;
+    margin: 10px;
+    /* background-color: rgb(38, 39, 42);
+    border-radius: 60px; */
+    display: flex;
+    flex-direction: column;
+}
+.gameRound{
+    display: flex;
+    padding: auto;
+    margin: auto;
+    justify-content: center;
+}
+.gameResult{
+    width:100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(38, 39, 42);
+    border-radius: 40px;
+    padding: 0px 25px ;
 
+}
+.gameGrid{
+    display: flex;
+    align-items: center;
+    background-color: rgb(38, 39, 42);
+    border-radius: 40px;
+    padding: 0px 20px ; 
+}
+ .gameCheck{
+    width: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(38, 39, 42);
+    border-radius: 40px;
+    padding: 0px 25px ;
+}
+
+.gameButton{
+    border-radius: 5px;
+}
+
+.resultElement{
+    margin: 0px 3px;
+}
+.resultIcons{
+    width: 15px;
+    height: 15px;
+    border: 2px;
+    border-color: aliceblue;
+    border-radius: 30px;
+    padding: auto;
+    margin: 2px;
 }
