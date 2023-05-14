@@ -5,6 +5,8 @@ class GameLogic {
         this.patternLen = patternLen;
         this.repeatColors = repeatColors;
         this.colorsArr = [];
+        this.solutionArr = [];
+        this.roundColors = [];
         this.round = 0;
     }
     createColorArr() {
@@ -14,6 +16,8 @@ class GameLogic {
                 (index * (360 / this.colorNumber) + (offset % 360)) +
                 ",100%,50%)");
         }
+    }
+    generateSolution() {
     }
     displayColors() {
         const colorsSection = document.getElementById("selectColors");

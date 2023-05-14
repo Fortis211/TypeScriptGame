@@ -1,5 +1,7 @@
 class GameLogic {
   public colorsArr: string[] = [];
+  private solutionArr: number[] = [];
+  public roundColors: string[] = [];
   public round: number = 0;
   constructor(
     public colorNumber: number,
@@ -15,6 +17,9 @@ class GameLogic {
           ",100%,50%)"
       );
     }
+  }
+  generateSolution(){
+    //
   }
   displayColors() {
     const colorsSection = document.getElementById(
