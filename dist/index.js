@@ -54,20 +54,20 @@ class GameLogic {
             gameGrid.appendChild(gameColor);
         }
         let checkButton = document.createElement("button");
-        checkButton.setAttribute("id", 'button' + this.round);
-        checkButton.setAttribute("class", 'gameButton');
-        checkButton.innerText = 'Check';
+        checkButton.setAttribute("id", "button" + this.round);
+        checkButton.setAttribute("class", "gameButton");
+        checkButton.innerText = "Check";
         checkButton.addEventListener("click", onCheckButton);
         gameCheck.appendChild(checkButton);
-        let options = ['correct', 'misplaced', 'wrong'];
-        let colors = ['green', 'blue', 'red'];
+        let options = ["correct", "misplaced", "wrong"];
+        let colors = ["green", "blue", "red"];
         for (let index = 0; index < 3; index++) {
-            let el = document.createElement('div');
-            el.setAttribute('id', options[index] + this.round);
-            el.setAttribute('class', "resultElement");
-            el.innerText = '0';
+            let el = document.createElement("div");
+            el.setAttribute("id", options[index] + this.round);
+            el.setAttribute("class", "resultElement");
+            el.innerText = "0";
             gameResult.appendChild(el);
-            let elIcon = document.createElement('div');
+            let elIcon = document.createElement("div");
             elIcon.style.backgroundColor = colors[index];
             elIcon.setAttribute("class", "resultIcons");
             gameResult.appendChild(elIcon);
@@ -84,28 +84,38 @@ function onCheckButton(event) {
     event.target.disabled = true;
     let round = event.target.id;
     round = round.slice(6);
-    document.getElementById('grid' + round).style.pointerEvents = 'none';
+    document.getElementById("grid" + round).style.pointerEvents = "none";
 }
 function numberInputLen(event) {
     let val = parseInt(event.target.value);
     if (val > 10) {
-        document.getElementById("patternLengthInput").value =
-            "10";
+        event.target.value = "10";
     }
     if (val <= 0) {
-        document.getElementById("patternLengthInput").value =
-            "1";
+        event.target.value = "1";
+    }
+    if (!repeatColors) {
+        let cols = parseInt(document.getElementById("numOfColorsInput").value);
+        if (cols <= val) {
+            document.getElementById("numOfColorsInput").value =
+                val.toString();
+        }
     }
 }
 function numberInputCol(event) {
     let val = parseInt(event.target.value);
     if (val > 25) {
-        document.getElementById("numOfColorsInput").value =
-            "25";
+        event.target.value = "25";
     }
     if (val <= 0) {
-        document.getElementById("numOfColorsInput").value =
-            "1";
+        event.target.value = "1";
+    }
+    if (!repeatColors) {
+        let len = parseInt(document.getElementById("patternLengthInput").value);
+        if (val <= len) {
+            document.getElementById("numOfColorsInput").value =
+                len.toString();
+        }
     }
 }
 function yesBtnClicked(event) {
@@ -120,6 +130,11 @@ function noBtnClicked(event) {
         false;
     document.getElementById("repeatBtnNo").disabled = true;
     repeatColors = false;
+    let cols = document.getElementById("numOfColorsInput");
+    let len = document.getElementById("patternLengthInput");
+    if (parseInt(cols.value) < parseInt(len.value)) {
+        cols.value = len.value;
+    }
 }
 let repeatColors = true;
 let oGameLogic;
