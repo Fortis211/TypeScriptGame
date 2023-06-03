@@ -71,6 +71,8 @@ class GameLogic {
             div.setAttribute("draggable", 'true');
             div.setAttribute("ondragstart", 'drag(event)');
             div.style.backgroundColor = element;
+            div.style.width = (Math.floor(Math.random() * 20) + 15) + 'px';
+            div.style.borderRadius = (Math.floor(Math.random() * 28) + 2) + 'px';
             colorsSection.appendChild(div);
         });
     }
@@ -198,8 +200,10 @@ function noBtnClicked(event) {
 function drop(event) {
     event.preventDefault();
     let droppedColorId = event.dataTransfer.getData('text');
-    let colVal = document.getElementById(droppedColorId).style.backgroundColor;
-    event.target.style.backgroundColor = colVal;
+    const draggedDiv = document.getElementById(droppedColorId);
+    event.target.style.backgroundColor = draggedDiv.style.backgroundColor;
+    event.target.style.width = draggedDiv.style.width;
+    event.target.style.borderRadius = draggedDiv.style.borderRadius;
 }
 function allowDrop(event) {
     event.preventDefault();
