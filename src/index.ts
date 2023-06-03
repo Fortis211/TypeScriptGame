@@ -244,7 +244,7 @@ function drag(event:Event){
 }
 //Game Settings elements
 
-let repeatColors: boolean = true;
+let repeatColors: boolean = false;
 
 //start Game
 let oGameLogic: GameLogic;

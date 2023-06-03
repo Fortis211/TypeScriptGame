@@ -211,7 +211,7 @@ function allowDrop(event) {
 function drag(event) {
     event.dataTransfer.setData('text', event.target.id);
 }
-let repeatColors = true;
+let repeatColors = false;
 let oGameLogic;
 let isInitialized = false;
 const start = document.getElementById("startBtn");
