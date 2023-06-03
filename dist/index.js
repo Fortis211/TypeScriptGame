@@ -68,6 +68,8 @@ class GameLogic {
             let div = document.createElement("div");
             div.setAttribute("class", "colors");
             div.setAttribute("id", "color" + index);
+            div.setAttribute("draggable", 'true');
+            div.setAttribute("ondragstart", 'drag(event)');
             div.style.backgroundColor = element;
             colorsSection.appendChild(div);
         });
@@ -97,6 +99,8 @@ class GameLogic {
             gameColor.style.backgroundColor = "white";
             gameColor.setAttribute("class", "colors");
             gameColor.setAttribute("id", "index" + index);
+            gameColor.setAttribute('ondrop', "drop(event)");
+            gameColor.setAttribute('ondragover', "allowDrop(event)");
             gameGrid.appendChild(gameColor);
         }
         let checkButton = document.createElement("button");
@@ -126,14 +130,19 @@ class GameLogic {
     }
 }
 function onCheckButton(event) {
-    oGameLogic.createRound();
     event.target.disabled = true;
     let round = event.target.id;
     round = round.slice(6);
     document.getElementById("grid" + round).style.pointerEvents = "none";
     let isSolved = oGameLogic.checkState(round);
     if (isSolved) {
-        alert('u won :))');
+        event.target.disabled = true;
+        event.target.innerText = 'You guessed the pattern!';
+        document.getElementById("grid" + round).style.backgroundColor = 'rgb(255,255,200)';
+        alert('You won :)');
+    }
+    else {
+        oGameLogic.createRound();
     }
 }
 function numberInputLen(event) {
@@ -185,6 +194,18 @@ function noBtnClicked(event) {
     if (parseInt(cols.value) < parseInt(len.value)) {
         cols.value = len.value;
     }
+}
+function drop(event) {
+    event.preventDefault();
+    let droppedColorId = event.dataTransfer.getData('text');
+    let colVal = document.getElementById(droppedColorId).style.backgroundColor;
+    event.target.style.backgroundColor = colVal;
+}
+function allowDrop(event) {
+    event.preventDefault();
+}
+function drag(event) {
+    event.dataTransfer.setData('text', event.target.id);
 }
 let repeatColors = true;
 let oGameLogic;

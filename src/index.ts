@@ -72,6 +72,8 @@ class GameLogic {
       let div = document.createElement("div");
       div.setAttribute("class", "colors");
       div.setAttribute("id", "color" + index);
+      div.setAttribute("draggable", 'true');
+      div.setAttribute("ondragstart", 'drag(event)');
       div.style.backgroundColor = element;
       colorsSection.appendChild(div);
     });
@@ -107,6 +109,8 @@ class GameLogic {
       gameColor.style.backgroundColor = "white";
       gameColor.setAttribute("class", "colors");
       gameColor.setAttribute("id", "index" + index);
+      gameColor.setAttribute('ondrop',"drop(event)");
+      gameColor.setAttribute('ondragover',"allowDrop(event)");
       gameGrid.appendChild(gameColor);
     }
 
@@ -142,7 +146,6 @@ class GameLogic {
 }
 
 function onCheckButton(event: Event) {
-  oGameLogic.createRound();
   (event.target as HTMLButtonElement).disabled = true;
   let round = (event.target as HTMLButtonElement).id;
   round = round.slice(6);
@@ -151,8 +154,13 @@ function onCheckButton(event: Event) {
     ).style.pointerEvents = "none";
     let isSolved = oGameLogic.checkState(round);
     if(isSolved){
-      alert('u won :))');
+      (event.target as HTMLButtonElement).disabled = true;
+      (event.target as HTMLButtonElement).innerText = 'You guessed the pattern!';
+      (document.getElementById("grid" + round) as HTMLDivElement).style.backgroundColor = 'rgb(255,255,200)';
+      alert('You won :)');
       //to be completed
+    } else {
+      oGameLogic.createRound();
     }
   }
 
@@ -213,6 +221,22 @@ function noBtnClicked(event: Event) {
   }
 
 
+}
+
+//drag & drop events
+function drop(event: Event) {
+  event.preventDefault();
+  let droppedColorId = ((event as DragEvent).dataTransfer as DataTransfer).getData('text');
+  let colVal = (document.getElementById(droppedColorId) as HTMLDivElement).style.backgroundColor;
+  (event.target as HTMLDivElement).style.backgroundColor = colVal;
+}
+
+function allowDrop(event:Event) {
+  event.preventDefault();
+}
+
+function drag(event:Event){
+  ((event as DragEvent).dataTransfer as DataTransfer).setData('text', (event.target as HTMLElement).id);
 }
 //Game Settings elements
 
